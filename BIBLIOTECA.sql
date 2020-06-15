@@ -1,0 +1,83 @@
+CREATE TABLE TB_PESSOA (
+
+cd_cpf BIGINT NOT NULL,
+nm_nome VARCHAR(120) NOT NULL,
+cd_telefone BIGINT NOT NULL,
+nm_endereco VARCHAR(200) NOT NULL,
+PRIMARY KEY (cd_cpf)
+
+);
+
+CREATE TABLE TB_EMPRESTIMO (
+
+cd_emprestimo INT NOT NULL AUTO_INCREMENT,
+dt_emprestimo DATE NOT NULL,
+dt_devolucao_prevista DATE NOT NULL,
+dt_devolucao DATE,
+PRIMARY KEY (cd_emprestimo)
+
+);
+
+CREATE TABLE TB_LIVRO (
+cd_livro INT NOT NULL AUTO_INCREMENT,
+nm_livro VARCHAR(100) NOT NULL,
+
+PRIMARY KEY (cd_livro)
+);
+
+CREATE TABLE TB_GENERO (
+
+cd_genero INT NOT NULL AUTO_INCREMENT,
+nm_genero VARCHAR(30) NOT NULL,
+
+PRIMARY KEY (cd_genero)
+
+);
+
+CREATE TABLE TB_LIVRO_GENERO(
+
+cd_livro INT,
+cd_genero INT,
+
+CONSTRAINT FK_TB_LIVRO_CD_LIVRO FOREIGN KEY (cd_livro) REFERENCES TB_LIVRO (cd_livro),
+CONSTRAINT FK_TB_GENERO_CD_GENERO FOREIGN KEY (cd_genero) REFERENCES TB_GENERO (cd_genero)
+
+);
+
+CREATE TABLE TB_EMPRESTIMO_PESSOA (
+
+cd_cpf BIGINT,
+cd_emprestimo INT,
+
+CONSTRAINT FK_TB_PESSOA_CD_CPF FOREIGN KEY (cd_cpf) REFERENCES TB_PESSOA (cd_cpf),
+CONSTRAINT FK_TB_EMPRESTIMO_CD_EMPRESTIMO FOREIGN KEY (cd_emprestimo) REFERENCES TB_EMPRESTIMO (cd_emprestimo)
+
+);
+
+CREATE TABLE TB_EMPRESTIMO_LIVRO (
+
+cd_livro INT,
+cd_emprestimo INT,
+
+CONSTRAINT FK_TB_LIVRO_CD_LIVRO2 FOREIGN KEY (cd_livro) REFERENCES TB_LIVRO (cd_livro),
+CONSTRAINT FK_TB_EMPRESTIMO_CD_EMPRESTIMO2 FOREIGN KEY (cd_emprestimo) REFERENCES TB_EMPRESTIMO (cd_emprestimo)
+);
+
+INSERT INTO TB_PESSOA(
+cd_cpf,
+nm_nome,
+cd_telefone,
+nm_endereco
+) VALUES (10987654321,"Fulano Cicrano",1399559955, "Rua de Baixo");
+
+INSERT INTO TB_LIVRO(
+cd_livro,
+nm_livro
+)VALUES(NULL,"As crônicas de Narnia");
+
+INSERT INTO TB_GENERO (
+cd_genero,
+nm_genero
+)VALUES(NULL,"Romance");
+
+SELECT * FROM TB_GENERO;
